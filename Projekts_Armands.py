@@ -52,7 +52,7 @@ if len(items) > 0:
 #     print('cover art: ' + track['album']['images'][0]['url'])
 #     print()
 
-http://127.0.0.1:5000/tab?url=https://tabs.ultimate-guitar.com/tab
+
 
 
 
