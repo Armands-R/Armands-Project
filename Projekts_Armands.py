@@ -16,7 +16,7 @@ print(dati.json())
                                                                                                                                                                                                                 # zupa = BeautifulSoup(dati.content, "html.parser")
                                                                                                                                                                                                                 # rez = str(zupa.find("div", {"class":"json-scrolling-panel"}))
                                                                                                                                                                                                                 # print(rez)
-
+# a
 
 # with open('lyrics.json', 'r') as f:
 #     data = json.load(f)
