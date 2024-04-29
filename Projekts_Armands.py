@@ -18,16 +18,7 @@ dati = requests.get(f"https://www.stands4.com/services/v2/lyrics.php?uid=12502&t
                                                                                                                                                                                                                 # zupa = BeautifulSoup(dati.content, "html.parser")
                                                                                                                                                                                                                 # rez = str(zupa.find("div", {"class":"json-scrolling-panel"}))
                                                                                                                                                                                                                 # print(rez)
-# a
 
-# with open('lyrics.json', 'r') as f:
-#     data = json.load(f)
-# print(data)
-
-                 
-
-# for artist in data.keys():                                       
-#     print(artist)
 
 
 
