@@ -2,6 +2,8 @@ import json
 import sys
 import sqlite3
 import requests
+
+global dati
                                                                                                                                                                                                                     # from bs4 import BeautifulSoup
 connection = sqlite3.connect("main.db")
 
@@ -10,9 +12,9 @@ connection = sqlite3.connect("main.db")
 
 word = input("Ievadi vienu vārdu angliski: ")
 headers = {'User-Agent': 'Mozilla/5.0'}
-dati = requests.get(f"https://www.stands4.com/services/v2/lyrics.php?uid=12502&tokenid=xhIwZZuaJqWznHSV&term={word}&format=json", headers=headers)
-print(f"https://www.stands4.com/services/v2/lyrics.php?uid=12502&tokenid=xhIwZZuaJqWznHSV&term={word}&format=json")
-print(dati.json())
+dati = requests.get(f"https://www.stands4.com/services/v2/lyrics.php?uid=12502&tokenid=xhIwZZuaJqWznHSV&term={word}&format=json", headers=headers).json()
+# print(f"https://www.stands4.com/services/v2/lyrics.php?uid=12502&tokenid=xhIwZZuaJqWznHSV&term={word}&format=json")
+# print(dati)
                                                                                                                                                                                                                 # zupa = BeautifulSoup(dati.content, "html.parser")
                                                                                                                                                                                                                 # rez = str(zupa.find("div", {"class":"json-scrolling-panel"}))
                                                                                                                                                                                                                 # print(rez)
@@ -30,6 +32,61 @@ print(dati.json())
 
 
 
+# def count_artists(dati):
+#     with open(dati, 'r') as f:
+#         data = json.load(f)
+#         artists = [entry['artist'] for entry in data['result']]
+#         artist_count = len(artists)
+#         return artist_count
+
+
+# count = count_artists(dati)
+# print("Count of 'artist' key:", count)
+
+
+
+
+def count_artists(dati):
+    kopa = set()
+    sk = 0
+    for el in dati['result']:
+        # print(el['artist'])
+        kopa.add(el['artist'])
+    # artists = [entry['artist'] for entry in data['result']]
+    # artist_count = len(artists)
+    # print(dati['result'])
+    print(kopa)
+    return len(kopa)
+
+
+count = count_artists(dati)
+print("Count of 'artist' key:", count)
+
+
+
+
+
+
+
+# def count_selected_keys(json_data, selected_keys):
+#     counts = {key: 0 for key in selected_keys}
+
+#     for item in json_data:
+#         for key in selected_keys:
+#             if key in item:
+#                 counts[key] += 1
+
+#     return counts
+
+# json_data = dati.json()
+
+# selected_keys = ['artist']
+
+# key_counts = count_selected_keys(json_data, selected_keys)
+# # key_counts = json_data['result'].count()
+
+# for key, count in key_counts.items():
+#     print(f"{key}: {count}")
 
 
 
