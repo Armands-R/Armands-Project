@@ -45,7 +45,7 @@ curs = connection.cursor()
 
 word = input("Ievadi vienu vārdu angliski: ")                   # ievada meklejumu
 
-# if word ==  search_word from songs_table
+# if word ==  search_word from songs_table: 
 
 headers = {'User-Agent': 'Mozilla/5.0'}
 dati = requests.get(f"https://www.stands4.com/services/v2/lyrics.php?uid=12502&tokenid=xhIwZZuaJqWznHSV&term={word}&format=json", headers=headers).json()                       #json requests lai atrastu izpilditaju skaitu
@@ -61,7 +61,7 @@ artists_txt = str(artists)
 # print(len(artists))
 # print(type(artists_txt))
 
-ievietot = f"INSERT INTO Songs VALUES (2, '{word}', {count_artists})"
+ievietot = f"INSERT INTO Songs VALUES (3, '{word}', {count_artists})"
 # ievietot = f'INSERT INTO Songs VALUES (2, green, 57)'
 print("IEVIETOT", ievietot)
 curs.execute(ievietot)
