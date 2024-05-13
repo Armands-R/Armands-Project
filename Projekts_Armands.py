@@ -4,20 +4,91 @@ import sqlite3
 import requests
 
 global dati
-                                                                                                                                                                                                                    # from bs4 import BeautifulSoup
+# global kopa
+
+def artists(dati):                                            # saskaita visus izpilditajus un izvada to skaitu
+    kopa = set()
+    sk = 0
+    for el in dati['result']:
+        kopa.add(el['artist'])
+    # print(kopa)
+    return (kopa)
+
+
 connection = sqlite3.connect("main.db")
+curs = connection.cursor()
+                                        # define tabulas datubazei
+# songs_table = """            
+#     CREATE TABLE Songs (
+#         word_id	INTEGER NOT NULL UNIQUE,
+#         search_word	TEXT NOT NULL,
+#         results	TEXT NOT NULL,
+#         PRIMARY KEY(word_id AUTOINCREMENT),
+#         FOREIGN KEY(word_id) REFERENCES Atrists(word_id)
+#     );
+# """
+# artist_table = """
+#     CREATE TABLE Atrists (
+#     	result_id	INTEGER NOT NULL UNIQUE,
+#     	artist	TEXT NOT NULL,
+#     	word_id	INTEGER NOT NULL,
+#     	PRIMARY KEY(result_id AUTOINCREMENT)
+#     );
+# """
+#                                     # izveido tabulas datubazei
+# curs.execute(songs_table)                                     
+# curs.execute(artist_table)
+
+
 
 # https://www.stands4.com/services/v2/lyrics.php?uid=12502&tokenid=xhIwZZuaJqWznHSV&term=forever%20young&artist=Alphaville&format=json
 
+word = input("Ievadi vienu vārdu angliski: ")                   # ievada meklejumu
 
-word = input("Ievadi vienu vārdu angliski: ")
+# if word ==  search_word from songs_table
+
 headers = {'User-Agent': 'Mozilla/5.0'}
-dati = requests.get(f"https://www.stands4.com/services/v2/lyrics.php?uid=12502&tokenid=xhIwZZuaJqWznHSV&term={word}&format=json", headers=headers).json()
+dati = requests.get(f"https://www.stands4.com/services/v2/lyrics.php?uid=12502&tokenid=xhIwZZuaJqWznHSV&term={word}&format=json", headers=headers).json()                       #json requests lai atrastu izpilditaju skaitu
 # print(f"https://www.stands4.com/services/v2/lyrics.php?uid=12502&tokenid=xhIwZZuaJqWznHSV&term={word}&format=json")
 # print(dati)
-                                                                                                                                                                                                                # zupa = BeautifulSoup(dati.content, "html.parser")
-                                                                                                                                                                                                                # rez = str(zupa.find("div", {"class":"json-scrolling-panel"}))
-                                                                                                                                                                                                                # print(rez)
+
+count_artists = len(artists(dati))
+print("Count of 'artist' key:", count_artists)
+
+artists = artists(dati)
+artists_txt = str(artists)
+
+# print(len(artists))
+# print(type(artists_txt))
+
+ievietot = f"INSERT INTO Songs VALUES (2, '{word}', {count_artists})"
+# ievietot = f'INSERT INTO Songs VALUES (2, green, 57)'
+print("IEVIETOT", ievietot)
+curs.execute(ievietot)
+
+
+
+
+connection.commit() # Aizver konekciju 
+connection.close()
+
+
+
+# def count_artists(dati):
+#     kopa = set()
+#     sk = 0
+#     for el in dati['result']:
+#         # print(el['artist'])
+#         kopa.add(el['artist'])
+#     # artists = [entry['artist'] for entry in data['result']]
+#     # artist_count = len(artists)
+#     # print(dati['result'])
+#     print(kopa)
+#     return len(kopa)
+
+
+
+
 
 
 
@@ -33,26 +104,6 @@ dati = requests.get(f"https://www.stands4.com/services/v2/lyrics.php?uid=12502&t
 
 # count = count_artists(dati)
 # print("Count of 'artist' key:", count)
-
-
-
-
-def count_artists(dati):
-    kopa = set()
-    sk = 0
-    for el in dati['result']:
-        # print(el['artist'])
-        kopa.add(el['artist'])
-    # artists = [entry['artist'] for entry in data['result']]
-    # artist_count = len(artists)
-    # print(dati['result'])
-    print(kopa)
-    return len(kopa)
-
-
-count = count_artists(dati)
-print("Count of 'artist' key:", count)
-
 
 
 
@@ -99,7 +150,10 @@ print("Count of 'artist' key:", count)
 
 
 
-
+# from bs4 import BeautifulSoup
+ # zupa = BeautifulSoup(dati.content, "html.parser")
+                                                                                                                                                                                                                # rez = str(zupa.find("div", {"class":"json-scrolling-panel"}))
+                                                                                                                                                                                                                # print(rez)
 
 
 
