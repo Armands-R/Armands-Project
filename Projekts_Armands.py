@@ -14,62 +14,74 @@ def artists(dati):                                            # saskaita visus i
     # print(kopa)
     return (kopa)
 
-
 connection = sqlite3.connect("main.db")
 curs = connection.cursor()
                                         # define tabulas datubazei
 # songs_table = """            
 #     CREATE TABLE Songs (
-#         word_id	INTEGER NOT NULL UNIQUE,
-#         search_word	TEXT NOT NULL,
-#         results	TEXT NOT NULL,
+#         word_id   INTEGER NOT NULL UNIQUE,
+#         search_word   TEXT NOT NULL,
+#         results   TEXT NOT NULL,
+#         artists   TEXT NOT NULL,
 #         PRIMARY KEY(word_id AUTOINCREMENT),
 #         FOREIGN KEY(word_id) REFERENCES Atrists(word_id)
 #     );
 # """
 # artist_table = """
-#     CREATE TABLE Atrists (
-#     	result_id	INTEGER NOT NULL UNIQUE,
-#     	artist	TEXT NOT NULL,
-#     	word_id	INTEGER NOT NULL,
-#     	PRIMARY KEY(result_id AUTOINCREMENT)
+#     CREATE TABLE Artists (
+#       meklejums_id   INTEGER NOT NULL UNIQUE,
+#       search  TEXT NOT NULL,
+#       word_id INTEGER NOT NULL,
+#       PRIMARY KEY(meklejums_id AUTOINCREMENT)
 #     );
 # """
 #                                     # izveido tabulas datubazei
-# curs.execute(songs_table)                                     
+# curs.execute(songs_table)                                    
 # curs.execute(artist_table)
-
-
 
 # https://www.stands4.com/services/v2/lyrics.php?uid=12502&tokenid=xhIwZZuaJqWznHSV&term=forever%20young&artist=Alphaville&format=json
 
 word = input("Ievadi vienu vārdu angliski: ")                   # ievada meklejumu
 
-# if word ==  search_word from songs_table: 
+# vaicajums = f"SELECT search_word FROM Songs WHERE search_word = {word}"
+# atbilde = curs.execute(vaicajums).fetchone()
+# print(atbilde)
+# print(word)
+# print(word == atbilde)
+# if word ==  atbilde:
+#     print(f'Izpilditaju skaits: "SELECT results FROM Songs WHERE searched_word = {atbilde}"')
 
+# else:
 headers = {'User-Agent': 'Mozilla/5.0'}
-dati = requests.get(f"https://www.stands4.com/services/v2/lyrics.php?uid=12502&tokenid=xhIwZZuaJqWznHSV&term={word}&format=json", headers=headers).json()                       #json requests lai atrastu izpilditaju skaitu
-# print(f"https://www.stands4.com/services/v2/lyrics.php?uid=12502&tokenid=xhIwZZuaJqWznHSV&term={word}&format=json")
-# print(dati)
+dati = requests.get(f"https://www.stands4.com/services/v2/lyrics.php?uid=12502&tokenid=xhIwZZuaJqWznHSV&term={word}&format=json", headers=headers).json()      #json requests lai atrastu izpilditaju skaitu
 
+    # print(f"https://www.stands4.com/services/v2/lyrics.php?uid=12502&tokenid=xhIwZZuaJqWznHSV&term={word}&format=json")
+
+#   print(dati)
+                                                    # izvada izpilditaju skaitu
 count_artists = len(artists(dati))
-print("Count of 'artist' key:", count_artists)
-
+print("Izpilditaju skaits:", count_artists)
 artists = artists(dati)
 artists_txt = str(artists)
 
-# print(len(artists))
-# print(type(artists_txt))
+    # print(len(artists))
+    # print(type(artists_txt))
 
-ievietot = f"INSERT INTO Songs VALUES (3, '{word}', {count_artists})"
-# ievietot = f'INSERT INTO Songs VALUES (2, green, 57)'
-print("IEVIETOT", ievietot)
+                                                                                                                        #datubaze ievieto vertibas
+ievietot = f'INSERT INTO Songs(search_word, results, artists) VALUES ("{word}", {count_artists}, "{artists_txt}")'
+    # ievietot = f'INSERT INTO Songs VALUES (2, green, 57)'
+    # print("IEVIETOT", ievietot)
 curs.execute(ievietot)
 
+# pieprasijums = f"SELECT word_id FROM Songs WHERE search_word = '{word}';"
+    # print(pieprasijums)
+ievietot2 = f'INSERT INTO Artists(search, word_id) VALUES("{word}", (SELECT word_id FROM Songs WHERE search_word = "{word}"))'
+curs.execute(ievietot2)
+
+# print(artists)
 
 
-
-connection.commit() # Aizver konekciju 
+connection.commit() # Aizver konekciju
 connection.close()
 
 
