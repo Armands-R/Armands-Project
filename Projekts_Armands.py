@@ -195,9 +195,9 @@ connection.close()
 
 
 
-# klienta2_id = "EIpcEal2Kdlck9COc_CzfCzalsdu_xzwxqmSTvKQy6AuJTVdyXwB5zBBKxPo3pBH"
-# klienta2_secret = "B2AkQktsf5qq0rP4WMwLX7xcN8kbMql4pq35i9se7zGDPG-zU_AEpfM1tBwq9rNsQ3v4xHIPgeuCV2XskeA-sQ"
-# access_token = "BIH3Ig-66qBCiX8qFFIrm81B7A1p5aKOPydarK_0YNRZO25kauVOZAWpTYRhKCop"
+# klienta2_id = "EIpcEal2Kdlck9COc_CzfCzalsdu_xzwxqmSTvKQy6AuJTVdyXwB5zBBKxPo3"
+# klienta2_secret = "B2AkQktsf5qq0rP4WMwLX7xcN8kbMql4pq35i9se7zGDPG-zU_AEpfM1tBwq9rNsQ3v4xHIPgeuCV2XskeA"
+# access_token = "BIH3Ig-66qBCiX8qFFIrm81B7A1p5aKOPydarK_0YNRZO25kauVOZAWpTYRhK"
 
 
 # artist= input("Ieraksti izpildītāju: ")
@@ -240,7 +240,7 @@ connection.close()
 #         return "Song not found."
 
 
-# access_token = "BIH3Ig-66qBCiX8qFFIrm81B7A1p5aKOPydarK_0YNRZO25kauVOZAWpTYRhKCop"
+# access_token = "BIH3Ig-66qBCiX8qFFIrm81B7A1p5aKOPydarK_0YNRZO25kauVOZAWpTYRhK"
 # artist_name = artist
 # song_title = song
 
